@@ -1,0 +1,5 @@
+---
+- name: Install needrestart (EL/Rocky — from EPEL)
+  ansible.builtin.dnf:
+    name: needrestart
+    state: present

@@ -1,0 +1,6 @@
+---
+- name: Install needrestart (Debian/Ubuntu)
+  ansible.builtin.apt:
+    pkg: needrestart
+    state: present
+    cache_valid_time: 600

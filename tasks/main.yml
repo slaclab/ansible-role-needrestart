@@ -1,11 +1,26 @@
 ---
 # install needrestart
 
+#- name: Install needrestart
+#  ansible.builtin.apt:
+#    pkg: needrestart
+#    state: present
+#    cache_valid_time: 600
+
+# install needrestart (platform-specific)
 - name: Install needrestart
-  ansible.builtin.apt:
-    pkg: needrestart
-    state: present
-    cache_valid_time: 600
+  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+
+- name: Ensure needrestart config directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - /etc/needrestart/conf.d
+    - /etc/needrestart/notify.d
 
 - name: Override outdated needrestart.conf
   ansible.builtin.copy:
