@@ -1,12 +1,6 @@
 ---
 # install needrestart
 
-#- name: Install needrestart
-#  ansible.builtin.apt:
-#    pkg: needrestart
-#    state: present
-#    cache_valid_time: 600
-
 - name: Install needrestart (Debian/Ubuntu)
   ansible.builtin.apt:
     pkg: needrestart
@@ -14,22 +8,11 @@
     cache_valid_time: 600
   when: ansible_os_family == 'Debian'
 
-- name: Install needrestart (EL/Rocky — from EPEL)
+- name: Install needrestart (EL/Rocky - from EPEL)
   ansible.builtin.dnf:
     name: needrestart
     state: present
   when: ansible_os_family == 'RedHat'
-
-- name: Ensure needrestart config directories exist
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
-  loop:
-    - /etc/needrestart/conf.d
-    - /etc/needrestart/notify.d
 
 - name: Override outdated needrestart.conf
   ansible.builtin.copy:
