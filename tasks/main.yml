@@ -7,9 +7,18 @@
 #    state: present
 #    cache_valid_time: 600
 
-# install needrestart (platform-specific)
-- name: Install needrestart
-  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+- name: Install needrestart (Debian/Ubuntu)
+  ansible.builtin.apt:
+    pkg: needrestart
+    state: present
+    cache_valid_time: 600
+  when: ansible_os_family == 'Debian'
+
+- name: Install needrestart (EL/Rocky — from EPEL)
+  ansible.builtin.dnf:
+    name: needrestart
+    state: present
+  when: ansible_os_family == 'RedHat'
 
 - name: Ensure needrestart config directories exist
   ansible.builtin.file:
