@@ -8,7 +8,7 @@
     cache_valid_time: 600
   when: ansible_os_family == 'Debian'
 
-- name: Install needrestart (EL/Rocky - from EPEL)
+- name: Install needrestart (EL from Fedora / EPEL)
   ansible.builtin.dnf:
     name: needrestart
     state: present
